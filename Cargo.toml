@@ -1,6 +1,13 @@
 [package]
-name = "template_crate"
+name = "euroc"
 version = "0.1.0"
 edition = "2018"
 
 [dependencies]
+anyhow = "1.0"
+csv = "1.1"
+image = "0.23"
+nalgebra = "0.29"
+serde = "1.0.130"
+thiserror = "1.0"
+yaml-rust = "0.4"
