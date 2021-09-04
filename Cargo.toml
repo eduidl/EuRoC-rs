@@ -2,6 +2,11 @@
 name = "euroc"
 version = "0.1.0"
 edition = "2018"
+author = ["Yuma Hiramatsu <yuma.hiramatsu@gmail.com>"]
+
+description = "Utility for EuRoC MAV dataset"
+repository = "https://github.com/eduidl/EuRoC-rs"
+license = "Apache-2.0"
 
 [dependencies]
 anyhow = "1.0"
