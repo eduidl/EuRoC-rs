@@ -74,9 +74,7 @@ impl Iterator for GroundTruthIterator {
     type Item = Result<GroundTruthRecord>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let row = self.reader.next()?;
-
-        let parse = || -> Self::Item {
+        self.reader.next().map(|row| {
             let row = row?;
             Ok(GroundTruthRecord {
                 timestamp: row[0].parse::<u64>()?.into(),
@@ -107,9 +105,7 @@ impl Iterator for GroundTruthIterator {
                     row[16].parse::<f64>()?,
                 ),
             })
-        };
-
-        Some(parse())
+        })
     }
 }
 

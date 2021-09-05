@@ -96,9 +96,7 @@ impl Iterator for ImuIterator {
     type Item = Result<ImuRecord>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let row = self.reader.next()?;
-
-        let parse = || -> Self::Item {
+        self.reader.next().map(|row| {
             let row = row?;
             Ok(ImuRecord {
                 timestamp: row[0].parse::<u64>()?.into(),
@@ -113,9 +111,7 @@ impl Iterator for ImuIterator {
                     row[6].parse::<f64>()?,
                 ),
             })
-        };
-
-        Some(parse())
+        })
     }
 }
 

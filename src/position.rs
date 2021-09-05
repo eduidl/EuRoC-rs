@@ -66,9 +66,7 @@ impl Iterator for PositionIterator {
     type Item = Result<PositionRecord>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let row = self.reader.next()?;
-
-        let parse = || {
+        self.reader.next().map(|row| {
             let row = row?;
             Ok(PositionRecord {
                 timestamp: row[0].parse::<u64>()?.into(),
@@ -78,9 +76,7 @@ impl Iterator for PositionIterator {
                     row[3].parse::<f64>()?,
                 ),
             })
-        };
-
-        Some(parse())
+        })
     }
 }
 
