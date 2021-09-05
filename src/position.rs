@@ -66,12 +66,10 @@ impl Iterator for PositionIterator {
     type Item = Result<PositionRecord>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let row = match self.reader.next()? {
-            Ok(v) => v,
-            Err(e) => return Some(Err(e.into())),
-        };
+        let row = self.reader.next()?;
 
         let parse = || {
+            let row = row?;
             Ok(PositionRecord {
                 timestamp: row[0].parse::<u64>()?.into(),
                 position: na::Vector3::new(

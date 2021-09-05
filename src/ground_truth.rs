@@ -74,12 +74,10 @@ impl Iterator for GroundTruthIterator {
     type Item = Result<GroundTruthRecord>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let row = match self.reader.next()? {
-            Ok(v) => v,
-            Err(e) => return Some(Err(e.into())),
-        };
+        let row = self.reader.next()?;
 
         let parse = || -> Self::Item {
+            let row = row?;
             Ok(GroundTruthRecord {
                 timestamp: row[0].parse::<u64>()?.into(),
                 position: na::Vector3::new(

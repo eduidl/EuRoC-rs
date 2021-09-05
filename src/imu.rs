@@ -96,12 +96,10 @@ impl Iterator for ImuIterator {
     type Item = Result<ImuRecord>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let row = match self.reader.next()? {
-            Ok(v) => v,
-            Err(e) => return Some(Err(e.into())),
-        };
+        let row = self.reader.next()?;
 
         let parse = || -> Self::Item {
+            let row = row?;
             Ok(ImuRecord {
                 timestamp: row[0].parse::<u64>()?.into(),
                 gyro: na::Vector3::new(

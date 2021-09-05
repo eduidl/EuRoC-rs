@@ -123,12 +123,10 @@ impl Iterator for ImageIterator {
     type Item = Result<ImageRecord>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let row = match self.reader.next()? {
-            Ok(v) => v,
-            Err(e) => return Some(Err(e.into())),
-        };
+        let row = self.reader.next()?;
 
         let parse = || {
+            let row = row?;
             Ok(ImageRecord {
                 timestamp: row[0].parse::<u64>()?.into(),
                 image: image::open(self.path.join(&row[1]))?,
